@@ -22,7 +22,11 @@
     </v-app-bar>
 
     <v-content>
-      <Home />
+      <v-slide-y-transition>
+
+      
+      <router-view></router-view>
+      </v-slide-y-transition>
     </v-content>
   </v-app>
 </template>

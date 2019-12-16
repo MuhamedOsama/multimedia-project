@@ -13,7 +13,7 @@
       <v-row v-if="upload" class="justify-center text-center">
         <v-col cols="12">
           <v-row justify="center">
-          <v-col cols="3">
+          <v-col cols="12"  xs="12" sm="3" lg="3">
             <v-text-field
             label="Title"
             prepend-icon="mdi-page-layout-header"
@@ -22,7 +22,7 @@
             placeholder="How to Send an Email"
           ></v-text-field>
           </v-col>
-          <v-col cols="3">
+          <v-col cols="12" xs="12" sm="3" lg="3">
             <v-text-field
             label="Author"
             prepend-icon="mdi-page-layout-header"
@@ -33,7 +33,7 @@
           </v-col>
           </v-row>
           <v-row justify="center">
-            <v-col cols="6">
+            <v-col cols="12" xs="12" sm="6" lg="6">
             <v-text-field
             label="Description"
             v-model="description"
@@ -44,7 +44,7 @@
           </v-col>
           </v-row>
           <v-row justify="center">
-            <v-col cols="6">
+            <v-col cols="12" xs="12" sm="6" lg="6">
             <v-file-input
             outlined
             @change="getStreams"
@@ -107,7 +107,7 @@
                 <v-card-text>{{v.description}}</v-card-text>
 
                 <v-card-actions>
-                  <v-btn text color="deep-purple accent-4">Play</v-btn>
+                  <v-btn :to="{name: 'VideoDetails', params:{id: v.id, video: v}}" text color="deep-purple accent-4">Details</v-btn>
                   <v-btn text color="deep-purple accent-4">Donate</v-btn>
                   <v-spacer></v-spacer>
                   <v-btn icon>
@@ -141,11 +141,9 @@
           <source v-if="v.file" type="video/mp4" :src="v.file">
           </video>
                 <!-- <v-img src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg" height="194"></v-img> -->
-
                 <v-card-text>{{v.description}}</v-card-text>
-
                 <v-card-actions>
-                  <v-btn text color="deep-purple accent-4">Play</v-btn>
+                  <v-btn :to="v.link" text color="deep-purple accent-4">Details</v-btn>
                   <v-btn text color="deep-purple accent-4">Donate</v-btn>
                   <v-spacer></v-spacer>
                   <v-btn icon>
@@ -179,7 +177,9 @@ export default {
       title:'',
       description:'',
       author:'',
-      search: ''
+      search: '',
+      modal: false,
+      currentVideo: null
     };
   },
   methods: {
@@ -188,7 +188,10 @@ export default {
     },
     getStreams() {},
     getFiles() {
+      const id = this.videos.length+1
       const video ={
+        id: id,
+        link: `/VideoDetails/${id}`,
         file: URL.createObjectURL(this.file),
         author: this.author,
         title: this.title,
@@ -198,7 +201,7 @@ export default {
     },
     searchVideo() {
       this.searchVideos = []
-      console.log("nigga typed" + this.search)
+      console.log(this.videos)
       let videos = []
       this.videos.forEach( v => {
         if(v.description.search(this.search) > -1)

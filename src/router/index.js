@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-
+import VideoDetails from '../views/VideoDetails.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -9,6 +9,14 @@ const routes = [
     path: '/',
     name: 'home',
     component: Home
+  },
+  {
+    path: '/VideoDetails/:id',
+    name: 'VideoDetails',
+    component: function () {
+          return import('../views/VideoDetails.vue')
+        },
+    props: true,
   },
   // {
   //   path: '/about',
@@ -23,7 +31,8 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  routes
+  routes,
+  mode: 'history'
 })
 
 export default router
