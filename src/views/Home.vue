@@ -1,5 +1,5 @@
-<template>
-    <v-container>
+<template >
+    <v-container >
       <v-row class="justify-center text-center mt-6">
         <v-col cols="12">
           <v-btn @click="toggleUpload" fab large dark color="brown">
@@ -86,8 +86,8 @@
           <source v-if="files" type="video/mp4" :src="v">
           </video>-->
           <v-slide-x-transition mode="out-in" hide-on-leave="">
-      <v-row v-show="search=='' &&!upload ">
-        <v-col l cols="12">
+      <v-row v-show="search=='' &&!upload " justify="center">
+        <v-col cols="10">
           <v-row align="center">
             
             <v-col cols="3" v-for="(v,i) in videos" v-bind:key="i">
@@ -107,7 +107,7 @@
                 <v-card-text>{{v.description}}</v-card-text>
 
                 <v-card-actions>
-                  <v-btn :to="{name: 'VideoDetails', params:{id: v.id, video: v}}" text color="deep-purple accent-4">Details</v-btn>
+                  <v-btn @click="showDetails(v)" text color="deep-purple accent-4">Details</v-btn>
                   <v-btn text color="deep-purple accent-4">Donate</v-btn>
                   <v-spacer></v-spacer>
                   <v-btn icon>
@@ -126,12 +126,12 @@
       </v-slide-x-transition>
       <v-slide-x-transition mode="out-in" hide-on-leave="">
       <v-row v-show="search && !upload">
-        <v-col l cols="12">
+        <v-col cols="12">
           <v-row>
             <v-col cols="4" v-for="(v,i) in searchVideos" v-bind:key="i">
               <v-card max-width="344" class="mx-auto">
                 <v-list-item>
-                  <v-list-item-avatar color="grey"></v-list-item-avatar>
+                  <v-list-item-avatar color="blue"></v-list-item-avatar>
                   <v-list-item-content>
                     <v-list-item-title class="headline">{{v.title}}</v-list-item-title>
                     <v-list-item-subtitle>by {{v.author}}</v-list-item-subtitle>
@@ -143,7 +143,7 @@
                 <!-- <v-img src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg" height="194"></v-img> -->
                 <v-card-text>{{v.description}}</v-card-text>
                 <v-card-actions>
-                  <v-btn :to="v.link" text color="deep-purple accent-4">Details</v-btn>
+                  <v-btn @click="showDetails(v)" text color="deep-purple accent-4">Details</v-btn>
                   <v-btn text color="deep-purple accent-4">Donate</v-btn>
                   <v-spacer></v-spacer>
                   <v-btn icon>
@@ -160,6 +160,22 @@
         </v-col>
       </v-row>
       </v-slide-x-transition>
+      <v-row justify="center">
+    <v-dialog v-if="dialoge" v-model="dialoge" max-width="50%">
+      <v-card dark>
+        <v-card-title class="headline">{{currentVideo.title}}</v-card-title>
+        <video class="pa-6" controls width="100%">
+          <source :src="currentVideo.file" type="video/mp4">
+        </video>
+        <v-card-text>{{currentVideo.description}}</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" text @click="helpful">Helpful 😍</v-btn>
+          <v-btn color="green darken-1" text @click="notHelpful">NotHelpful 😕</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-row>
     </v-container>
 </template>
 
@@ -178,12 +194,12 @@ export default {
       description:'',
       author:'',
       search: '',
-      modal: false,
-      currentVideo: null
+      dialoge: false,
+      currentVideo: {}
     };
   },
   methods: {
-    toggleUpload(){
+    toggleUpload() {
       this.upload = !this.upload
     },
     getStreams() {},
@@ -208,7 +224,22 @@ export default {
         this.searchVideos.push(v)
       })
       console.log(videos)
+    },
+    showDetails (v){
+      this.dialoge = !this.dialoge
+      this.currentVideo = v
+    },
+    helpful(){
+      this.dialoge = !this.dialoge
+      this.currentVideo = {}
+    },
+    notHelpful(){
+      this.dialoge = !this.dialoge
+      this.currentVideo = {}
     }
   }
 };
 </script>
+<style scoped>
+
+</style>

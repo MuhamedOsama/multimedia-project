@@ -1,12 +1,14 @@
 <template>
-  <v-app>
+  <v-app class="home">
     <v-app-bar
       app
-      color="green"
+      style="text-align:center !important;"
+      color="blue"
       dark
     >
-      <div class="d-flex align-center">
-        <h1>Multimedia Project</h1>
+        <v-spacer></v-spacer>
+      <div class="d-flex align-center" >
+        <h1>3alemni</h1>
       </div>
 
       <v-spacer></v-spacer>
@@ -21,7 +23,7 @@
       </v-btn> -->
     </v-app-bar>
 
-    <v-content>
+    <v-content style="background-image: url(toolss.jpg); background-repeat: repeat;">
       <v-slide-y-transition>
 
       
