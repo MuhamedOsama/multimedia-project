@@ -85,7 +85,8 @@
           <!-- <video v-for="(v,i) in videos" v-bind:key="i" class="mt-6" controls width="520" :src="video">
           <source v-if="files" type="video/mp4" :src="v">
           </video>-->
-      <v-row v-show="search=='' ">
+          <v-slide-x-transition mode="out-in" hide-on-leave="">
+      <v-row v-show="search=='' &&!upload ">
         <v-col l cols="12">
           <v-row align="center">
             
@@ -122,7 +123,9 @@
           </v-row>
         </v-col>
       </v-row>
-      <v-row v-show="search">
+      </v-slide-x-transition>
+      <v-slide-x-transition mode="out-in" hide-on-leave="">
+      <v-row v-show="search && !upload">
         <v-col l cols="12">
           <v-row>
             <v-col cols="4" v-for="(v,i) in searchVideos" v-bind:key="i">
@@ -158,6 +161,7 @@
           </v-row>
         </v-col>
       </v-row>
+      </v-slide-x-transition>
     </v-container>
 </template>
 
